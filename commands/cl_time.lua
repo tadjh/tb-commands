@@ -1,5 +1,6 @@
 function ChangeTime(source, args)
     local time = args[1]
+    print(args)
     if time and (time < 0 or time > 23) then
         print('Invalid hour of day')
         return
