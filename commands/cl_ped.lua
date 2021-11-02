@@ -16,7 +16,7 @@ function ChangePed()
     end
 
     SetPlayerModel(PlayerId(), pedModel)
-    SetPedComponentVariation(GetPlayerPed(-1), 0, 0, 0, 2)
+    SetPedDefaultComponentVariation(PlayerPedId())
 
     SetModelAsNoLongerNeeded(pedModel)
 end
