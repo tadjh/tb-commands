@@ -16,35 +16,40 @@ end
 function GoToCoords(source, args)
     local inputX, inputY, inputZ = args[1], args[2], args[3]
     local ped = PlayerPedId()
-    local x, y, z = .0, .0, 200.0
+    local x, y, z = .0, .0, 71.0
 
     if inputX then
-        print(inputX)
         x = CoordsAsNumber(inputX, x)
     end
 
     if inputY then
-        print(inputY)
         y = CoordsAsNumber(inputY, y)
 
     end
 
     if inputZ then
-        print(inputZ)
         z = CoordsAsNumber(inputZ, z)
     end
 
     -- Load terrian before getting ground Z
     SetFocusPosAndVel(x, y, z, 0.0, 0.0, 0.0)
 
-    local canGetGround, groundZ = GetGroundZFor_3dCoord(x, y, z, true)
+    Citizen.CreateThread(function()
+        local canGetGround, groundZ = GetGroundZFor_3dCoord(x, y, z, false)
 
-    if canGetGround then
-        z = groundZ
-    end
+        while canGetGround == false do
+            Wait(0)
+            z = z + 10
+            canGetGround, groundZ = GetGroundZFor_3dCoord(x, y, z, false)
+        end
 
-    SetEntityCoords(ped, x, y, z, false, false, false, false)
+        if canGetGround then
+            z = groundZ
+        end
 
-    ClearFocus() -- is this working?
+        SetEntityCoords(ped, x, y, z, false, false, false, false)
+
+        ClearFocus() -- is this working?    
+    end)
 end
 RegisterCommand('tp', GoToCoords, false)
