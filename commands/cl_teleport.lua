@@ -13,22 +13,21 @@ end
 
 -- Teleport to 0, 0 or custom coordinate
 -- TODO Sometimes doesn't load ground and I don't know why
-function GoToCoords(source, args)
-    local inputX, inputY, inputZ = args[1], args[2], args[3]
+function Teleport(source, args)
     local ped = PlayerPedId()
     local x, y, z = .0, .0, 71.0
 
-    if inputX then
-        x = CoordsAsNumber(inputX, x)
+    if args and args[1] then
+        x = CoordsAsNumber(args[1], x)
     end
 
-    if inputY then
-        y = CoordsAsNumber(inputY, y)
+    if args and args[2] then
+        y = CoordsAsNumber(args[2], y)
 
     end
 
-    if inputZ then
-        z = CoordsAsNumber(inputZ, z)
+    if args and args[3] then
+        z = CoordsAsNumber(args[3], z)
     end
 
     -- Load terrian before getting ground Z
@@ -52,4 +51,7 @@ function GoToCoords(source, args)
         ClearFocus() -- is this working?    
     end)
 end
-RegisterCommand('tp', GoToCoords, false)
+RegisterCommand('tp', Teleport, false)
+
+exports('tp', Teleport)
+
