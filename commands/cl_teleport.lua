@@ -38,7 +38,7 @@ function Teleport(source, args)
 
         while canGetGround == false do
             Wait(0)
-            z = z + 10
+            z = z + 1
             canGetGround, groundZ = GetGroundZFor_3dCoord(x, y, z, false)
         end
 
