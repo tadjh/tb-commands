@@ -3,6 +3,6 @@ game 'gta5'
 
 author 'Tadjh Brooks'
 description 'Commands'
-version '0.2.0'
+version '0.3.0'
 
-client_script 'commands/*.lua'
+client_script 'client/dist/index.js'
