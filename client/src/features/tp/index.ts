@@ -7,7 +7,7 @@ import { debugDATA } from "../../utils";
 //   ];
 //   debugDATA(hit);
 
-const tp = (x: number, y: number, z: number) => {
+const teleport = (x: number, y: number, z: number) => {
   const ped = PlayerPedId();
   SetEntityCoords(ped, x, y, z, false, false, false, false);
   ClearFocus();
@@ -20,7 +20,7 @@ const findGround = (x: number, y: number, z: number) => {
   const tick = setTick(() => {
     const [hit, groundZ] = GetGroundZFor_3dCoord(x, y, z + i, true);
     if (hit) {
-      tp(x, y, groundZ);
+      teleport(x, y, groundZ);
       clearTick(tick);
     }
     i += STEP;
@@ -29,13 +29,16 @@ const findGround = (x: number, y: number, z: number) => {
   });
 };
 
-export const teleport = (
-  source: number,
-  [inputX, inputY, inputZ]: [string, string, string]
-) => {
+const preload = (x: number, y: number, z: number) => {
+  SetFocusPosAndVel(x, y, z, 0.0, 0.0, 0.0);
+  findGround(x, y, z);
+};
+
+export const tp = (source: number, args?: [string, string, string]) => {
+  if (!args) return preload(0.0, 0.0, DEFAULT_GROUND_Z);
+  const [inputX, inputY, inputZ] = args;
   const x = inputX ? parseFloat(inputX) : 0.0;
   const y = inputY ? parseFloat(inputY) : 0.0;
   const z = inputZ ? parseFloat(inputZ) : DEFAULT_GROUND_Z;
-  SetFocusPosAndVel(x, y, z, 0.0, 0.0, 0.0);
-  findGround(x, y, z);
+  preload(x, y, z);
 };

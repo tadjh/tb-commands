@@ -23,25 +23,31 @@ const spawn = (vehicleName: string) => {
 };
 
 /**
- * Takes the given car and loads it
- * @param source The source
- * @param args The args
- * @param rawCommand The raw command entered
+ * Loads the vehicle into memory
+ * @param vehicleName The vehicle name
  * @returns void
  */
-export const car = (source: number, [input]: [string]) => {
-  const vehicleName = input || DEFAULT_VEHICLE;
+const request = (vehicleName: string) => {
   if (!IsModelInCdimage(vehicleName) || !IsModelAVehicle(vehicleName)) return;
   RequestModel(vehicleName);
-
-  const startTime = Date.now();
 
   const tick = setTick(() => {
     if (HasModelLoaded(vehicleName)) {
       spawn(vehicleName);
       clearTick(tick);
     }
-    if (Date.now() - startTime > MAX_EXECUTION) clearTick(tick);
     Wait(500);
   });
+};
+
+/**
+ * Takes the given car and loads it
+ * @param source The source
+ * @param args The args
+ * @returns void
+ */
+export const car = (source: number, args = []) => {
+  if (args.length < 1) return request(DEFAULT_VEHICLE);
+  const [vehicleName] = args;
+  request(vehicleName);
 };

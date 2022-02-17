@@ -1,7 +1,12 @@
 import { DEFAULT_COORDS_LABEL } from "../../constants";
+import { debugDATA } from "../../utils";
 
-export const coords = (source: number, [input]: [string]) => {
+/**
+ * Gets the ped's current coordinates
+ * @param source The source
+ * @returns void
+ */
+export const coords = (source: number) => {
   const pedCoords = GetEntityCoords(PlayerPedId(), true);
-  const text = `${input || DEFAULT_COORDS_LABEL} ${pedCoords}`;
-  console.log(text);
+  debugDATA(DEFAULT_COORDS_LABEL, pedCoords);
 };

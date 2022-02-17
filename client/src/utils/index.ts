@@ -10,6 +10,6 @@ export const IS_DEBUG = () =>
  * @returns
  */
 export function debugDATA(...data: any[]) {
-  if (!IS_DEBUG) return;
+  if (!IS_DEBUG()) return;
   console.log(`${CURRENT_RESOURCE_NAME.toUpperCase()}:`, ...data);
 }
