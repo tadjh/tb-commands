@@ -1,4 +1,4 @@
-import { DEFAULT_GROUND_Z, MAX_EXECUTION, STEP } from "../../constants";
+import { DEFAULT_GROUND_Z, MAX_EXECUTION, STEP } from "../../config";
 import { debugDATA } from "../../utils";
 
 //   const [hit, safeCoords] = GetSafeCoordForPed(x, y, z, true, 0) as [

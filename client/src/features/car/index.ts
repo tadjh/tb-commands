@@ -1,6 +1,6 @@
-import { DEFAULT_SEAT, DEFAULT_VEHICLE, MAX_EXECUTION } from "../../constants";
 import { Vector3Tuple } from "../../types";
-import { debugDATA } from "../../utils";
+import { DEFAULT_SEAT, DEFAULT_VEHICLE } from "./config";
+import { debugDATA, getArg, isEmpty, shouldRequestModel } from "./utils";
 
 /**
  * Creates the vehicle and release it from memory

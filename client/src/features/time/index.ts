@@ -3,7 +3,7 @@ import {
   TIME_ERROR_HOURS_TEXT,
   TIME_ERROR_MINUTES_TEXT,
   TIME_ERROR_SECONDS_TEXT,
-} from "../../constants";
+} from "../../config";
 import { debugDATA } from "../../utils";
 
 /**
