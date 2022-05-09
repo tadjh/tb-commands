@@ -6,7 +6,7 @@ import {
 } from "./config";
 import { debugDATA, isEmpty } from "../../utils";
 import { Args } from "./types";
-import { formatTime, handleError } from "./utils";
+import { parseArgs, handleError } from "./utils";
 
 /**
  * Sets the clock time
@@ -39,6 +39,6 @@ function setDefault() {
  */
 export function time(_source: number, args: Args) {
   if (isEmpty(args)) return setDefault();
-  const nextTime = formatTime(args);
+  const nextTime = parseArgs(args);
   setTime(...nextTime);
 }

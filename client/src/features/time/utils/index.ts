@@ -9,23 +9,23 @@ import {
 } from "../config";
 import { ErrorTypes, Vector3Tuple } from "../types";
 
-function formatHours(input?: string) {
+function parseHours(input?: string) {
   return input ? parseInt(input) : DEFAULT_HOUR_OF_DAY;
 }
 
-function formatMinutes(input?: string) {
+function parseMinutes(input?: string) {
   return input ? parseInt(input) : 0;
 }
 
-function formatSeconds(input?: string) {
+function parseSeconds(input?: string) {
   return input ? parseInt(input) : 0;
 }
 
-export function formatTime(args: (string | undefined)[]): Vector3Tuple {
+export function parseArgs(args: (string | undefined)[]): Vector3Tuple {
   const [inputHours, inputMinutes, inputSeconds] = args;
-  const hours = formatHours(inputHours);
-  const minutes = formatMinutes(inputMinutes);
-  const seconds = formatSeconds(inputSeconds);
+  const hours = parseHours(inputHours);
+  const minutes = parseMinutes(inputMinutes);
+  const seconds = parseSeconds(inputSeconds);
   return [hours, minutes, seconds];
 }
 
