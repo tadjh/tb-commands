@@ -1,12 +1,12 @@
-import { DEFAULT_COORDS_LABEL } from "../../constants";
+import { DEFAULT_COORDS_LABEL } from "./config";
 import { debugDATA } from "../../utils";
 
 /**
  * Gets the ped's current coordinates
- * @param source The source
+ * @param _source The source (unused)
  * @returns void
  */
-export const coords = (source: number) => {
+export function coords(_source: number) {
   const pedCoords = GetEntityCoords(PlayerPedId(), true);
   debugDATA(DEFAULT_COORDS_LABEL, pedCoords);
-};
+}
