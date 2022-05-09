@@ -16,5 +16,6 @@ RegisterCommand(COMMAND_TIME, time, false);
 RegisterCommand(COMMAND_TP, tp, false);
 
 globalThis.exports("car", car);
+globalThis.exports("ped", ped);
 globalThis.exports("time", time);
 globalThis.exports("tp", tp);

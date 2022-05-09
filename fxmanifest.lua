@@ -7,4 +7,4 @@ version '0.4.0'
 
 client_script 'client/dist/index.js'
 
-dependencies {'immersive-ped'}
+dependencies {'spawnmanager', 'immersive-ped'}

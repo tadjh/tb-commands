@@ -1,4 +1,4 @@
-import { Args } from "../types";
+import { Args, UndefinedArgs } from "../types";
 export * from "./debug";
 
 export function isEmpty<T extends unknown>(arr: T[]) {
@@ -8,4 +8,9 @@ export function isEmpty<T extends unknown>(arr: T[]) {
 export function getArg(args: Args) {
   const [arg1] = args;
   return arg1;
+}
+
+export function getArgs(args: UndefinedArgs): UndefinedArgs {
+  const [arg1, arg2] = args;
+  return [arg1, arg2];
 }
