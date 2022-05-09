@@ -1,3 +1,3 @@
-export const respawn = () => {
+export function respawn() {
   globalThis.exports.spawnmanager.forceRespawn();
-};
+}
