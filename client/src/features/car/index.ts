@@ -6,7 +6,7 @@ import { debugDATA, getArg, isEmpty, shouldRequestModel } from "./utils";
  * Creates the vehicle and release it from memory
  * @param model The name of the vehicle to be spawned
  */
-const spawn = (model: Model) => {
+function spawn(model: Model) {
   const ped = PlayerPedId();
   const pedCoords = GetEntityCoords(ped, true) as Vector3Tuple;
   const vehicle = CreateVehicle(
@@ -20,7 +20,7 @@ const spawn = (model: Model) => {
   SetEntityAsNoLongerNeeded(vehicle);
   SetModelAsNoLongerNeeded(model);
   debugDATA(`spawned vehicle model "${model}".`);
-};
+}
 
 function handleSpawn(model: Model) {
   const tick = setTick(() => {
@@ -37,12 +37,12 @@ function handleSpawn(model: Model) {
  * @param model The vehicle name
  * @returns void
  */
-const request = (model: Model) => {
+function request(model: Model) {
   if (!shouldRequestModel(model))
     return debugDATA(`vehicle model "${model}" not found`);
   RequestModel(model);
   handleSpawn(model);
-};
+}
 
 function requestDefault() {
   request(DEFAULT_VEHICLE);
