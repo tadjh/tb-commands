@@ -4,30 +4,38 @@ import {
   DEFAULT_VEHICLE,
 } from "./config";
 import { Model, UndefinedArgs, Vector3Tuple } from "../../types";
-import { debugDATA, getArgs, isEmpty, shouldRequestModel } from "./utils";
+import { debugDATA, getArgs, isTrue, shouldRequestModel } from "./utils";
+import { Options } from "./types";
+import { SpawnPlayerInCar } from "./utils/natives";
 
 function setVehiclePreset(vehicle: number, preset?: string | number) {
-  if (preset === undefined) return;
-
-  let color = -1;
+  if (preset === undefined || preset === "undefined") return;
 
   if (typeof preset === "string") {
-    color = parseInt(preset);
-    if (color === NaN) return;
+    const parsedPreset = parseInt(preset);
+    if (parsedPreset === NaN) return;
+    return SetVehicleColourCombination(vehicle, parsedPreset);
   }
 
-  if (typeof preset === "number") {
-    color = preset;
-  }
+  SetVehicleColourCombination(vehicle, preset);
+}
 
-  SetVehicleColourCombination(vehicle, color);
+function handleOptions(ped: number, vehicle: number, options: Options) {
+  setVehiclePreset(vehicle, options.preset);
+  if (isTrue(options.SEAT_INTO_CAR))
+    SetPedIntoVehicle(ped, vehicle, DEFAULT_SEAT);
+}
+
+function cleanUp(model: Model, vehicle: number) {
+  SetEntityAsNoLongerNeeded(vehicle);
+  SetModelAsNoLongerNeeded(model);
 }
 
 /**
  * Creates the vehicle and release it from memory
  * @param model The name of the vehicle to be spawned
  */
-function spawn(model: Model, preset?: string | number) {
+function spawn(model: Model, options?: Options) {
   const ped = PlayerPedId();
   const pedCoords = GetEntityCoords(ped, true) as Vector3Tuple;
   const vehicle = CreateVehicle(
@@ -37,37 +45,30 @@ function spawn(model: Model, preset?: string | number) {
     true,
     false
   );
-  SetPedIntoVehicle(ped, vehicle, DEFAULT_SEAT);
-  SetEntityAsNoLongerNeeded(vehicle);
-  SetModelAsNoLongerNeeded(model);
+  cleanUp(model, vehicle);
+  if (options) handleOptions(ped, vehicle, options);
   debugDATA(`spawned vehicle model "${model}".`);
-  setVehiclePreset(vehicle, preset);
 }
 
-function handleSpawn(model: Model, preset?: string | number) {
+function handleSpawn(model: Model, options?: Options) {
   const tick = setTick(() => {
     if (HasModelLoaded(model)) {
-      spawn(model, preset);
+      spawn(model, options);
       clearTick(tick);
     }
     Wait(500);
   });
 }
 
-/**
- * Loads the vehicle into memory
- * @param model The vehicle name
- * @returns void
- */
-function request(model: Model, preset?: string | number) {
+export function request(model: Model, options?: Options) {
   if (!shouldRequestModel(model))
     return debugDATA(`vehicle model "${model}" not found`);
   RequestModel(model);
-  handleSpawn(model, preset);
+  handleSpawn(model, options);
 }
 
-function requestDefault() {
-  request(DEFAULT_VEHICLE, DEFAULT_VEHICLE_PRESET);
+export function requestDefault() {
+  request(DEFAULT_VEHICLE, { preset: DEFAULT_VEHICLE_PRESET });
 }
 
 /**
@@ -77,7 +78,9 @@ function requestDefault() {
  * @returns void
  */
 export function car(_source: number, args: UndefinedArgs) {
-  if (isEmpty(args)) return requestDefault();
-  const [arg1, arg2] = getArgs(args);
-  request(arg1, arg2);
+  // if (isEmpty(args)) return requestDefault();
+  const [model, preset, SEAT_INTO_CAR] = getArgs(args);
+  SpawnPlayerInCar(model, { preset, SEAT_INTO_CAR });
 }
+
+export { SpawnPlayerInCar };

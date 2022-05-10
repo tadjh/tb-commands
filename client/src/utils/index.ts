@@ -11,6 +11,6 @@ export function getArg(args: Args) {
 }
 
 export function getArgs(args: UndefinedArgs): UndefinedArgs {
-  const [arg1, arg2] = args;
-  return [arg1, arg2];
+  const [arg1, arg2, arg3] = args;
+  return [arg1, arg2, arg3];
 }
