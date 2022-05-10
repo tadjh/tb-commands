@@ -8,7 +8,7 @@ import {
 } from "./config";
 import { car, SpawnPlayerInCar } from "./features/car";
 import { coords } from "./features/coords";
-import { ped } from "./features/ped";
+import { ped, SetPedModel } from "./features/ped";
 import { respawn } from "./features/respawn";
 import { time } from "./features/time";
 import { tp } from "./features/tp";
@@ -21,6 +21,4 @@ RegisterCommand(COMMAND_TIME, time, false);
 RegisterCommand(COMMAND_TP, tp, false);
 
 globalThis.exports("SpawnPlayerInCar", SpawnPlayerInCar);
-globalThis.exports("ped", ped);
-globalThis.exports("time", time);
-globalThis.exports("tp", tp);
+globalThis.exports("SetPedModel", SetPedModel);

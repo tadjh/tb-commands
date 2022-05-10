@@ -1,1 +1,1 @@
-export { ped } from "./lib/immersive-ped";
+export { ped, SetPedModel } from "./lib/immersive-ped";
