@@ -54,7 +54,7 @@ function setDefault() {
   handleTeleport(...DEFAULT_COORDS);
 }
 
-export const tp = (_source: number, args: Args) => {
+export const tp = (_source: number, args: Args | []) => {
   if (isEmpty(args)) return setDefault();
   const nextCoords = parseArgs(args);
   handleTeleport(...nextCoords);

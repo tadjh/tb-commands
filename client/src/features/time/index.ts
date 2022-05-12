@@ -37,7 +37,7 @@ function setDefault() {
  * @param args The args
  * @returns void
  */
-export function time(_source: number, args: Args) {
+export function time(_source: number, args: Args | []) {
   if (isEmpty(args)) return setDefault();
   const nextTime = parseArgs(args);
   setTime(...nextTime);
