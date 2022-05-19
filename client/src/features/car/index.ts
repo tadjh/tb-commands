@@ -8,6 +8,11 @@ import { debugDATA, getArgs, isTrue, shouldRequestModel } from "./utils";
 import { Options } from "./types";
 import { SpawnPlayerInCar } from "./utils/natives";
 
+function handleEmit(vehicle: number) {
+  emit("SpawnPlayerInCar", vehicle);
+  debugDATA(`emitting event "SpawnPlayerInCar"`);
+}
+
 function setVehiclePreset(vehicle: number, preset?: string | number) {
   if (preset === undefined || preset === "undefined") return;
 
@@ -31,10 +36,6 @@ function cleanUp(model: Model, vehicle: number) {
   SetModelAsNoLongerNeeded(model);
 }
 
-/**
- * Creates the vehicle and release it from memory
- * @param model The name of the vehicle to be spawned
- */
 function spawn(model: Model, options?: Options) {
   const ped = PlayerPedId();
   const pedCoords = GetEntityCoords(ped, true) as Vector3Tuple;
@@ -46,29 +47,43 @@ function spawn(model: Model, options?: Options) {
     false
   );
   cleanUp(model, vehicle);
-  if (options) handleOptions(ped, vehicle, options);
+  handleEmit(vehicle);
   debugDATA(`spawned vehicle model "${model}".`);
+  if (options) handleOptions(ped, vehicle, options);
+  return vehicle;
+}
+
+function shouldThreadExpire(elapsedTime: number) {
+  const MAX_EXECUTION_TIME = 5000;
+  return elapsedTime > MAX_EXECUTION_TIME;
 }
 
 function handleSpawn(model: Model, options?: Options) {
-  const tick = setTick(() => {
-    if (HasModelLoaded(model)) {
-      spawn(model, options);
-      clearTick(tick);
-    }
-    Wait(500);
+  return new Promise<number>(function (resolve, reject) {
+    const startTime = Date.now();
+    const tick = setTick(() => {
+      if (HasModelLoaded(model)) {
+        resolve(spawn(model, options));
+        return clearTick(tick);
+      }
+      const elapsedTime = Date.now() - startTime;
+      if (shouldThreadExpire(elapsedTime)) {
+        reject(`Max execution time elapsed in handleSpawn`);
+        return clearTick(tick);
+      }
+    });
   });
 }
 
 export function request(model: Model, options?: Options) {
   if (!shouldRequestModel(model))
-    return debugDATA(`vehicle model "${model}" not found`);
+    throw new Error(`vehicle model "${model}" not found`);
   RequestModel(model);
-  handleSpawn(model, options);
+  return handleSpawn(model, options);
 }
 
 export function requestDefault() {
-  request(DEFAULT_VEHICLE, { preset: DEFAULT_VEHICLE_PRESET });
+  return request(DEFAULT_VEHICLE, { preset: DEFAULT_VEHICLE_PRESET });
 }
 
 /**
@@ -77,10 +92,13 @@ export function requestDefault() {
  * @param args The args
  * @returns void
  */
-export function car(_source: number, args: UndefinedArgs) {
-  // if (isEmpty(args)) return requestDefault();
+export async function car(_source: number, args: UndefinedArgs) {
   const [model, preset, SEAT_INTO_CAR] = getArgs(args);
-  SpawnPlayerInCar(model, { preset, SEAT_INTO_CAR });
+  try {
+    await SpawnPlayerInCar(model, { preset, SEAT_INTO_CAR });
+  } catch (error) {
+    debugDATA(error);
+  }
 }
 
 export { SpawnPlayerInCar };

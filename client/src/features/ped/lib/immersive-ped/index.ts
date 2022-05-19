@@ -1,10 +1,10 @@
-export function ped(...data: any[]): VoidFunction {
+export function ped(...data: any[]): void {
   return globalThis.exports["immersive-ped"].ped(...data);
 }
 
 export function SetPedModel(
-  model?: string,
-  callback?: (ped: number) => void
-): number {
-  return globalThis.exports["immersive-ped"].SetPedModel(model, callback);
+  model?: string | number,
+  shouldEmit?: boolean
+): Promise<number> {
+  return globalThis.exports["immersive-ped"].SetPedModel(model, shouldEmit);
 }

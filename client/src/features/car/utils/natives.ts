@@ -4,5 +4,5 @@ import { Options } from "../types";
 
 export function SpawnPlayerInCar(model?: Model, options?: Options) {
   if (model === undefined || model === "undefined") return requestDefault();
-  request(model, options);
+  return request(model, options);
 }
