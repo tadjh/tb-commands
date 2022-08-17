@@ -11,11 +11,25 @@ import { parseArgs } from "./utils";
 const teleport = (x: number, y: number, z: number) => {
   SetEntityCoords(PlayerPedId(), x, y, z, false, false, false, false);
   ClearFocus();
+  if (IsScreenFadedOut()) {
+    DoScreenFadeIn(500);
+  }
   debugDATA(`Teleported to ${x}, ${y}, ${z}.`);
+};
+const beforeTeleport = (x: number, y: number, z: number) => {
+  DoScreenFadeOut(500);
+  const tick = setTick(() => {
+    if (!IsScreenFadedOut()) {
+      Wait(0);
+    } else {
+      SetFocusArea(x, y, z, 0.0, 0.0, 0.0);
+      clearTick(tick);
+    }
+  });
 };
 
 const handleTeleport = (x: number, y: number, z: number) => {
-  preload(x, y, z);
+  beforeTeleport(x, y, z);
   const startTime = Date.now();
   let i = 0;
   const tick = setTick(() => {
@@ -36,15 +50,11 @@ const handleTeleport = (x: number, y: number, z: number) => {
   });
 };
 
-const preload = (x: number, y: number, z: number) => {
-  SetFocusArea(x, y, z, 0.0, 0.0, 0.0);
-};
-
 function setDefault() {
   handleTeleport(...DEFAULT_COORDS);
 }
 
-export const tp = (_source: number, args: Args) => {
+export const tp = (_source: number, args: Args | []) => {
   if (isEmpty(args)) return setDefault();
   const nextCoords = parseArgs(args);
   handleTeleport(...nextCoords);
