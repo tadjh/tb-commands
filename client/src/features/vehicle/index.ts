@@ -6,11 +6,11 @@ import {
 import { Model, UndefinedArgs, Vector3Tuple } from "../../types";
 import { debugDATA, getArgs, isTrue, shouldRequestModel } from "./utils";
 import { Options } from "./types";
-import { SpawnPlayerInCar } from "./utils/natives";
+import { SpawnPlayerInVehicle } from "./utils/natives";
 
 function handleEmit(vehicle: number) {
-  emit("SpawnPlayerInCar", vehicle);
-  debugDATA(`emitting event "SpawnPlayerInCar"`);
+  emit("SpawnPlayerInVehicle", vehicle);
+  debugDATA(`emitting event "SpawnPlayerInVehicle"`);
 }
 
 function setVehiclePreset(vehicle: number, preset?: string | number) {
@@ -87,18 +87,18 @@ export function requestDefault() {
 }
 
 /**
- * Takes the given car and loads it
+ * Takes the given vehicle and loads it
  * @param _source The source (unused)
  * @param args The args
  * @returns void
  */
-export async function car(_source: number, args: UndefinedArgs) {
+export async function vehicle(_source: number, args: UndefinedArgs) {
   const [model, preset, SEAT_INTO_CAR] = getArgs(args);
   try {
-    await SpawnPlayerInCar(model, { preset, SEAT_INTO_CAR });
+    await SpawnPlayerInVehicle(model, { preset, SEAT_INTO_CAR });
   } catch (error) {
     debugDATA(error);
   }
 }
 
-export { SpawnPlayerInCar };
+export { SpawnPlayerInVehicle };
