@@ -20,5 +20,5 @@ RegisterCommand(COMMAND_RESPAWN, respawn, false);
 RegisterCommand(COMMAND_TIME, time, false);
 RegisterCommand(COMMAND_TP, tp, false);
 
-globalThis.exports("SpawnPlayerInCar", SpawnPlayerInVehicle);
+globalThis.exports("SpawnPlayerInVehicle", SpawnPlayerInVehicle);
 globalThis.exports("SetPedModel", SetPedModel);

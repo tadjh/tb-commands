@@ -1,4 +1,4 @@
-import { handleRequest, requestDefault } from "../features/ped";
+import { handleRequest, requestDefault } from "..";
 import { Model } from "../types";
 
 export function SetPedModel(model?: Model, shouldEmit = true) {
