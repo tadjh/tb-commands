@@ -1,4 +1,6 @@
+export type SeatType = "walk" | "none" | "instant";
+
 export interface Options {
-  preset?: string | number;
-  SEAT_INTO_CAR?: string | boolean;
+  SEAT_INTO_CAR: SeatType;
+  preset: string | number;
 }

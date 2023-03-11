@@ -13,7 +13,7 @@ function spawn(model: Model, shouldEmit?: boolean) {
   SetPlayerModel(PlayerId(), model);
   SetModelAsNoLongerNeeded(model);
   const ped = PlayerPedId();
-  SetPedDefaultComponentVariation(ped);
+  // SetPedDefaultComponentVariation(ped);
   debugDATA(`set ped model to "${model}"`);
   if (shouldEmit) handleEmit(ped);
   return ped;
@@ -79,5 +79,3 @@ export async function ped(_source: number, args: Args | []) {
     debugDATA(error);
   }
 }
-
-export { SetPedModel };

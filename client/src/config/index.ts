@@ -1,6 +1,6 @@
 export const CURRENT_RESOURCE_NAME = GetCurrentResourceName();
 
-export const COMMAND_CAR = "car";
+export const COMMAND_VEHICLE = "veh";
 export const COMMAND_COORDS = "coords";
 export const COMMAND_PED = "ped";
 export const COMMAND_RESPAWN = "respawn";

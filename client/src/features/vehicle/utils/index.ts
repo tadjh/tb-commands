@@ -6,7 +6,7 @@ export function shouldRequestModel(model: Model) {
 }
 
 export function isTrue(bool?: string | boolean) {
-  return bool === true || bool === "true" || bool === undefined;
+  return bool === true || bool === "true"; // || bool === undefined;
 }
 
 export function isUndefined(undef?: string | number) {
