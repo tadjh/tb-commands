@@ -126,7 +126,10 @@ export async function vehicle(_source: number, args: UndefinedArgs<SeatType>) {
     default:
       const model = arg0;
       try {
-        await SpawnVehicle(model, { SEAT_INTO_CAR: arg1, preset: arg2 });
+        await SpawnVehicle(model, {
+          SEAT_INTO_CAR: arg1 || "instant",
+          preset: arg2,
+        });
       } catch (error) {
         debugDATA(error);
       }
