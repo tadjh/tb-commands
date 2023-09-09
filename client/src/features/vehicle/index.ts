@@ -8,8 +8,8 @@ import { debugDATA, shouldRequestModel } from "./utils";
 import { Options, SeatType } from "./types";
 import { SpawnVehicle } from "./utils/natives";
 
-function handleEmit(vehicle: number) {
-  emit("SpawnVehicle", vehicle);
+function handleEmit(vehicle: number, preset?: string) {
+  emit("SpawnVehicle", vehicle, preset);
   debugDATA(`emitting event "SpawnVehicle"`);
 }
 
@@ -56,7 +56,10 @@ function spawn(model: Model, options?: Partial<Options>) {
     false
   );
   cleanUp(model, vehicle);
-  handleEmit(vehicle);
+  handleEmit(
+    vehicle,
+    typeof options?.preset === "string" ? options?.preset : undefined
+  );
   debugDATA(`spawned vehicle model "${model}".`);
   if (options) handleOptions(ped, vehicle, options);
   return vehicle;
@@ -127,8 +130,8 @@ export async function vehicle(_source: number, args: UndefinedArgs<SeatType>) {
       const model = arg0;
       try {
         await SpawnVehicle(model, {
-          SEAT_INTO_CAR: arg1 || "instant",
-          preset: arg2,
+          preset: arg1,
+          SEAT_INTO_CAR: arg2 || "instant",
         });
       } catch (error) {
         debugDATA(error);
