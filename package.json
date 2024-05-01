@@ -1,0 +1,30 @@
+{
+  "name": "tb-commands",
+  "version": "0.4.0",
+  "description": "tb-commands",
+  "main": "dist/clinet.bundle.js",
+  "author": "TadjhBrooks <tadjh.brooks@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "start": "webpack --watch",
+    "build": "webpack",
+    "clean": "node_modules/.bin/rimraf dist"
+  },
+  "devDependencies": {
+    "@citizenfx/client": "^2.0.8059-1",
+    "rimraf": "^5.0.5",
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.4.5",
+    "webpack": "^5.91.0",
+    "webpack-cli": "^5.1.4"
+  },
+  "engines": {
+    "node": ">=16.9.1",
+    "yarn": "1.22.5"
+  },
+  "resolutions": {
+    "path-scurry": "1.6.3",
+    "lru-cache": "7.18.0"
+  }
+}

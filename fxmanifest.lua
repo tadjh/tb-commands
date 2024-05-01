@@ -5,6 +5,6 @@ author 'Tadjh Brooks'
 description 'Commands'
 version '0.4.0'
 
-client_script 'client/dist/index.js'
+client_script 'dist/client.bundle.js'
 
-dependencies {'spawnmanager'}
+dependencies { 'spawnmanager' }
