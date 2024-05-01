@@ -9,8 +9,8 @@ import { Options, SeatType } from "./types";
 import { SpawnVehicle } from "./utils/natives";
 
 function handleEmit(vehicle: number, preset?: string) {
-  emit("SpawnVehicle", vehicle, preset);
-  debugDATA(`emitting event "SpawnVehicle"`);
+  emit("vehicleSpawned", vehicle, preset);
+  debugDATA(`emitting event "vehicleSpawned"`);
 }
 
 function setVehiclePreset(vehicle: number, preset?: string | number) {
