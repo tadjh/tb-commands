@@ -1,3 +1,5 @@
+export type Vector3Tuple = [number, number, number];
+
 export type Vector3 = { x: number; y: number; z: number };
 
 export type Args = string[] | [];

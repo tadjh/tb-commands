@@ -2,7 +2,7 @@
   "name": "tb-commands",
   "version": "0.4.0",
   "description": "tb-commands",
-  "main": "dist/clinet.bundle.js",
+  "main": "dist/client.bundle.js",
   "author": "TadjhBrooks <tadjh.brooks@gmail.com>",
   "license": "MIT",
   "private": true,
@@ -20,8 +20,7 @@
     "webpack-cli": "^5.1.4"
   },
   "engines": {
-    "node": ">=16.9.1",
-    "yarn": "1.22.5"
+    "node": ">=16.9.1"
   },
   "resolutions": {
     "path-scurry": "1.6.3",
