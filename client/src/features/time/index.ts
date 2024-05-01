@@ -4,7 +4,7 @@ import {
   INVALID_MINUTES,
   INVALID_SECONDS,
 } from "./config";
-import { debugDATA, isEmpty } from "../../utils";
+import { debugPrint, isEmpty } from "../../utils";
 import { Args } from "./types";
 import { parseArgs, handleError } from "./utils";
 
@@ -22,7 +22,7 @@ function setTime(hours: number, minutes: number, seconds: number) {
 
   NetworkOverrideClockTime(hours, minutes, seconds);
 
-  debugDATA(
+  debugPrint(
     `Time set to ${hours} hours, ${minutes} minutes and ${seconds} seconds.`
   );
 }

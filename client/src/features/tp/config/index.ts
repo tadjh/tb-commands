@@ -1,7 +1,6 @@
-import { Vector3Tuple } from "../../../types";
-export { MAX_EXECUTION } from "../../../config";
+import { Vector3 } from "../../../types";
+export { MAX_EXECUTION_TIME } from "../../../config";
 
 export const STEP = 0.5;
-export const DEFAULT_GROUND_Z = 28.0;
-export const DEFAULT_COORDS: Vector3Tuple = [0.0, 0.0, DEFAULT_GROUND_Z];
+export const DEFAULT_COORDS: Vector3 = { x: 0.0, y: 0.0, z: 28.0 };
 export const SHOULD_IGNORE_WATER = true;

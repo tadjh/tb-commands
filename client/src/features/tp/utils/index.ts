@@ -1,14 +1,10 @@
-import { Args, Vector3Tuple } from "../../../types";
-import { DEFAULT_GROUND_Z } from "../config";
+import { Args, Vector3 } from "../../../types";
+import { DEFAULT_COORDS } from "../config";
 
-function parseInput(input: string, fallback = 0.0) {
-  return input ? parseFloat(input) : fallback;
-}
-
-export function parseArgs(args: Args): Vector3Tuple {
-  const [inputX, inputY, inputZ] = args;
-  const x = parseInput(inputX);
-  const y = parseInput(inputY);
-  const z = parseInput(inputZ, DEFAULT_GROUND_Z);
-  return [x, y, z];
+export function parseArgs([x, y, z]: Args): Vector3 {
+  return {
+    x: x ? parseFloat(x) : DEFAULT_COORDS.x,
+    y: y ? parseFloat(y) : DEFAULT_COORDS.y,
+    z: z ? parseFloat(z) : DEFAULT_COORDS.z,
+  };
 }
