@@ -1,11 +1,10 @@
 import { CURRENT_RESOURCE_NAME } from "./config";
 import { Vector3Tuple } from "./types";
 
-onNet(`${CURRENT_RESOURCE_NAME}:goto`, requestGoto);
-function requestGoto(targetId: string) {
-  const targetHandle = GetPlayerPed(targetId);
+onNet(`${CURRENT_RESOURCE_NAME}:gotoRequest`, (targetId: string) => {
+  const targetEntity = GetPlayerPed(targetId);
 
-  if (!targetHandle) {
+  if (!targetEntity) {
     return emitNet(
       "chat:addMessage",
       source,
@@ -13,15 +12,14 @@ function requestGoto(targetId: string) {
     );
   }
 
-  const coords = GetEntityCoords(targetHandle) as Vector3Tuple;
+  const coords = GetEntityCoords(targetEntity) as Vector3Tuple;
   SetEntityCoords(source, ...coords, true, false, true, false);
-}
+});
 
-onNet(`${CURRENT_RESOURCE_NAME}:summon`, requestSummon);
-function requestSummon(targetId: string) {
-  const targetHandle = GetPlayerPed(targetId);
+onNet(`${CURRENT_RESOURCE_NAME}:summonRequest`, (targetId: string) => {
+  const targetEntity = GetPlayerPed(targetId);
 
-  if (!targetHandle) {
+  if (!targetEntity) {
     return emitNet(
       "chat:addMessage",
       source,
@@ -29,7 +27,7 @@ function requestSummon(targetId: string) {
     );
   }
 
-  const sourceHandle = GetPlayerPed(String(source));
-  const coords = GetEntityCoords(sourceHandle) as Vector3Tuple;
-  SetEntityCoords(targetHandle, ...coords, true, false, true, false);
-}
+  const sourceEntity = GetPlayerPed(String(source));
+  const coords = GetEntityCoords(sourceEntity) as Vector3Tuple;
+  SetEntityCoords(targetEntity, ...coords, true, false, true, false);
+});

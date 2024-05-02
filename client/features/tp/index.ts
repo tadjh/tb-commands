@@ -95,7 +95,7 @@ export function goto(_source: number, args: Args) {
     });
   }
 
-  emitNet(`${CURRENT_RESOURCE_NAME}:goto`, args[0]);
+  emitNet(`${CURRENT_RESOURCE_NAME}:gotoRequest`, args[0]);
 }
 
 export function summon(_source: number, args: Args) {
@@ -105,5 +105,5 @@ export function summon(_source: number, args: Args) {
     });
   }
 
-  emitNet(`${CURRENT_RESOURCE_NAME}:summon`, args[0]);
+  emitNet(`${CURRENT_RESOURCE_NAME}:summonRequest`, args[0]);
 }
