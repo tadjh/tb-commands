@@ -1,7 +1,8 @@
 import { MAX_EXECUTION_TIME, SHOULD_IGNORE_WATER, STEP } from "./config";
-import { Args, Vector3 } from "../../types";
+import { Args, Vector3, Vector3Tuple } from "../../types";
 import { debugPrint, isEmpty } from "../../utils";
 import { parseArgs } from "./utils";
+import { CURRENT_RESOURCE_NAME } from "../../config";
 
 export async function tp(_source: number, args: Args | []) {
   if (isEmpty(args)) return;
@@ -86,3 +87,23 @@ const teleport = (coords: Vector3) => {
   }
   debugPrint(`Teleported to ${coords.x}, ${coords.y}, ${coords.z}.`);
 };
+
+export function goto(_source: number, args: Args) {
+  if (!args[0]) {
+    return TriggerEvent("chat:addMessage", {
+      args: ["Please provide a target ID"],
+    });
+  }
+
+  emitNet(`${CURRENT_RESOURCE_NAME}:goto`, args[0]);
+}
+
+export function summon(_source: number, args: Args) {
+  if (!args[0]) {
+    return TriggerEvent("chat:addMessage", {
+      args: ["Please provide a target ID"],
+    });
+  }
+
+  emitNet(`${CURRENT_RESOURCE_NAME}:summon`, args[0]);
+}

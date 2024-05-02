@@ -6,5 +6,6 @@ description 'Commands'
 version '0.4.0'
 
 client_script 'dist/client.bundle.js'
+server_script 'dist/server.bundle.js'
 
 dependencies { 'spawnmanager' }
